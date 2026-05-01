@@ -16,6 +16,8 @@ public class MovimientoDelPersonaje : MonoBehaviour
     public Vector3 dimensionesCaja;
     public bool enSuelo;
 
+    public Animator animaciones;
+
     private void Awake()
     {
         controles = new();
@@ -39,6 +41,9 @@ public class MovimientoDelPersonaje : MonoBehaviour
         direccion = controles.Jugador.Movimiento.ReadValue<Vector2>();
         AjustarRotacion(direccion.x);
         enSuelo = Physics2D.OverlapBox(controladorSuelo.position, dimensionesCaja, 0f, queEsSuelo);
+
+        animaciones.SetFloat("Caminar", Mathf.Abs(direccion.x));
+        animaciones.SetBool("Saltar", !enSuelo);
     }
 
     private void FixedUpdate()
